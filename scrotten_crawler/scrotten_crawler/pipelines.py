@@ -13,11 +13,7 @@ def clean_title(param):
 class ScrottenCrawlerPipeline(object):
 
     def process_item(self, item, spider):
-        movie_id = clean_title(item['movie_id'])
-        movie_id = clean_title(item['movie_id'])
-        movie_id = clean_title(item['movie_id'])
-        movie_id = clean_title(item['movie_id'])
-        movie_id = clean_title(item['movie_id'])
+        title = clean_title(item['title'])
 
     # movie_id = models.CharField(max_length=255, unique=True)
     # name = models.CharField(max_length=255)

@@ -3,7 +3,7 @@
 import os
 import sys
 sys.path.append(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), ".."))
-os.environ['DJANGO_SETTINGS_MODULE'] = 'best_movies.settings'
+os.environ['DJANGO_SETTINGS_MODULE'] = 'scrotten_analysis.settings'
 import django
 django.setup()
 
@@ -11,7 +11,7 @@ DOWNLOAD_DELAY = 3
 
 # 'scrapy.pipelines.images.ImagesPipeline': 100,
 ITEM_PIPELINES = {
-    'crawling.pipelines.CrawlingPipeline': 100,
+    'scrotten_crawler.pipelines.ScrottenCrawlerPipeline': 100,
 }
 
 # Defaults
