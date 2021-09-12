@@ -15,12 +15,6 @@ class ScrottenCrawlerPipeline(object):
     def process_item(self, item, spider):
         title = clean_title(item['title'])
 
-    # movie_id = models.CharField(max_length=255, unique=True)
-    # name = models.CharField(max_length=255)
-    # genre = models.CharField(max_length=255)
-    # year = models.IntegerField(max_length=4)
-    # gross_sales = models.BigIntegerField()
-
         ScrottenMovie.objects.create(
             title=title,
         )
