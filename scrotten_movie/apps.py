@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class RottenCoreConfig(AppConfig):
+class ScrottenMovieConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'rotten_core'
+    name = 'scrotten_movie'

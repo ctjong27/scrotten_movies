@@ -1,5 +1,5 @@
 """
-WSGI config for rotten_analysis project.
+WSGI config for scrotten_analysis project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'rotten_analysis.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'scrotten_analysis.settings')
 
 application = get_wsgi_application()
