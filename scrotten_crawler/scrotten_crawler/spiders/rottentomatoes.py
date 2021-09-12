@@ -18,7 +18,8 @@ class RottenTomatoesSpider(CrawlSpider):
 
     def parse_item(self, response):
         i = MovieItem()
-        i['title'] = response.css('h1.mop-ratings-wrap__title ::text').extract_first()
+        i['title'] = response.css('h1.scoreboard__title ::text').extract_first()
+        # i['title'] = response.css('h1.mop-ratings-wrap__title ::text').extract_first()
         # i['critics_consensus'] = response.css('p.mop-ratings-wrap__text--concensus ::text').extract()
         # i['average_grade'] = response.css('#js-rotten-count ::text').extract()[1]
         # i['amount_reviews'] = response.css('.mop-ratings-wrap__text--small ::text').extract()[1]
