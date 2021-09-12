@@ -1,5 +1,21 @@
 # -*- coding: utf-8 -*-
 
+import os
+import sys
+sys.path.append(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), ".."))
+os.environ['DJANGO_SETTINGS_MODULE'] = 'best_movies.settings'
+import django
+django.setup()
+
+DOWNLOAD_DELAY = 3
+
+# 'scrapy.pipelines.images.ImagesPipeline': 100,
+ITEM_PIPELINES = {
+    'crawling.pipelines.CrawlingPipeline': 100,
+}
+
+# Defaults
+
 # Scrapy settings for scrotten_crawler project
 #
 # For simplicity, this file contains only settings considered important or
