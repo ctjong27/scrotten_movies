@@ -1,12 +1,11 @@
-
 import scrapy
 from crawler_scrapy.items import ScrottenMovieItem
 from scrapy.spiders import CrawlSpider
 
 
-class RottenTomatoesSpider(CrawlSpider):
+class ScrottenSpider(CrawlSpider):
 
-    name = 'rottentomatoes'
+    name = 'scrottenspider'
     allowed_domains = ['rottentomatoes.com']
     start_urls = ['https://www.rottentomatoes.com/top/bestofrt/?year=2018',]
 
