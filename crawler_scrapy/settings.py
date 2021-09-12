@@ -11,12 +11,12 @@ DOWNLOAD_DELAY = 3
 
 # 'scrapy.pipelines.images.ImagesPipeline': 100,
 ITEM_PIPELINES = {
-    'scrotten_crawler.pipelines.ScrottenCrawlerPipeline': 100,
+    'crawler_scrapy.pipelines.ScrottenCrawlerPipeline': 100,
 }
 
 # Defaults
 
-# Scrapy settings for scrotten_crawler project
+# Scrapy settings for crawler_scrapy project
 #
 # For simplicity, this file contains only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
@@ -25,14 +25,14 @@ ITEM_PIPELINES = {
 #     https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = 'scrotten_crawler'
+BOT_NAME = 'crawler_scrapy'
 
-SPIDER_MODULES = ['scrotten_crawler.spiders']
-NEWSPIDER_MODULE = 'scrotten_crawler.spiders'
+SPIDER_MODULES = ['crawler_scrapy.spiders']
+NEWSPIDER_MODULE = 'crawler_scrapy.spiders'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'scrotten_crawler (+http://www.yourdomain.com)'
+#USER_AGENT = 'crawler_scrapy (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
@@ -63,13 +63,13 @@ ROBOTSTXT_OBEY = True
 # Enable or disable spider middlewares
 # See https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 #SPIDER_MIDDLEWARES = {
-#    'scrotten_crawler.middlewares.ScrottenCrawlerSpiderMiddleware': 543,
+#    'crawler_scrapy.middlewares.ScrottenCrawlerSpiderMiddleware': 543,
 #}
 
 # Enable or disable downloader middlewares
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 #DOWNLOADER_MIDDLEWARES = {
-#    'scrotten_crawler.middlewares.ScrottenCrawlerDownloaderMiddleware': 543,
+#    'crawler_scrapy.middlewares.ScrottenCrawlerDownloaderMiddleware': 543,
 #}
 
 # Enable or disable extensions
@@ -81,7 +81,7 @@ ROBOTSTXT_OBEY = True
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 #ITEM_PIPELINES = {
-#    'scrotten_crawler.pipelines.ScrottenCrawlerPipeline': 300,
+#    'crawler_scrapy.pipelines.ScrottenCrawlerPipeline': 300,
 #}
 
 # Enable and configure the AutoThrottle extension (disabled by default)

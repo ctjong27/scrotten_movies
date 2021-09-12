@@ -1,6 +1,6 @@
 
 import scrapy
-from scrotten_crawler.items import MovieItem
+from crawler_scrapy.items import ScrottenMovieItem
 from scrapy.spiders import CrawlSpider
 
 
@@ -17,7 +17,7 @@ class RottenTomatoesSpider(CrawlSpider):
             yield scrapy.Request(url=link, callback=self.parse_item)
 
     def parse_item(self, response):
-        i = MovieItem()
+        i = ScrottenMovieItem()
         i['title'] = response.css('h1.scoreboard__title ::text').extract_first()
         # i['title'] = response.css('h1.mop-ratings-wrap__title ::text').extract_first()
         # i['critics_consensus'] = response.css('p.mop-ratings-wrap__text--concensus ::text').extract()

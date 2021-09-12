@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class MovieConfig(AppConfig):
+class ScrottenMovieConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'movie'
+    name = 'scrotten_movie'

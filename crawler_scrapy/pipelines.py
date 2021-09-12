@@ -5,7 +5,7 @@
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 
-from movie.models import Movie
+from scrotten_movie.models import ScrottenMovie
 
 def clean_title(param):
     return param
@@ -21,7 +21,7 @@ class ScrottenCrawlerPipeline(object):
     # year = models.IntegerField(max_length=4)
     # gross_sales = models.BigIntegerField()
 
-        Movie.objects.create(
+        ScrottenMovie.objects.create(
             title=title,
         )
 
