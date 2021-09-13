@@ -1,11 +1,11 @@
 <mxfile host="65bd71144e">
     <diagram name="Page-1" id="9f46799a-70d6-7492-0946-bef42562c5a5">
-        <mxGraphModel dx="1341" dy="753" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" background="none" math="0" shadow="0">
+        <mxGraphModel dx="421" dy="753" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" background="none" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
                 <mxCell id="0PVAmD6CbVCiySTQS2vP-5" value="scrotten_movie" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" parent="1" vertex="1">
-                    <mxGeometry x="90" y="80" width="220" height="156" as="geometry"/>
+                    <mxGeometry x="90" y="80" width="220" height="182" as="geometry"/>
                 </mxCell>
                 <mxCell id="0PVAmD6CbVCiySTQS2vP-6" value="movie_id" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="0PVAmD6CbVCiySTQS2vP-5" vertex="1">
                     <mxGeometry y="26" width="220" height="26" as="geometry"/>
@@ -21,6 +21,9 @@
                 </mxCell>
                 <mxCell id="0PVAmD6CbVCiySTQS2vP-30" value="gross_sales" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="0PVAmD6CbVCiySTQS2vP-5" vertex="1">
                     <mxGeometry y="130" width="220" height="26" as="geometry"/>
+                </mxCell>
+                <mxCell id="23" value="approval_percentage" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="0PVAmD6CbVCiySTQS2vP-5" vertex="1">
+                    <mxGeometry y="156" width="220" height="26" as="geometry"/>
                 </mxCell>
                 <mxCell id="0PVAmD6CbVCiySTQS2vP-11" value="scrotten_member" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" parent="1" vertex="1">
                     <mxGeometry x="680" y="80" width="220" height="208" as="geometry"/>
@@ -47,7 +50,7 @@
                     <mxGeometry y="182" width="220" height="26" as="geometry"/>
                 </mxCell>
                 <mxCell id="0PVAmD6CbVCiySTQS2vP-16" value="scrotten_tv" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" parent="1" vertex="1">
-                    <mxGeometry x="380" y="80" width="220" height="156" as="geometry"/>
+                    <mxGeometry x="380" y="80" width="220" height="182" as="geometry"/>
                 </mxCell>
                 <mxCell id="0PVAmD6CbVCiySTQS2vP-17" value="tv_id" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="0PVAmD6CbVCiySTQS2vP-16" vertex="1">
                     <mxGeometry y="26" width="220" height="26" as="geometry"/>
@@ -63,6 +66,9 @@
                 </mxCell>
                 <mxCell id="0PVAmD6CbVCiySTQS2vP-20" value="end_year" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="0PVAmD6CbVCiySTQS2vP-16" vertex="1">
                     <mxGeometry y="130" width="220" height="26" as="geometry"/>
+                </mxCell>
+                <mxCell id="25" value="approval_percentage" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="0PVAmD6CbVCiySTQS2vP-16" vertex="1">
+                    <mxGeometry y="156" width="220" height="26" as="geometry"/>
                 </mxCell>
                 <mxCell id="4" value="scrotten_movie_to_member" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" parent="1" vertex="1">
                     <mxGeometry x="80" y="460" width="230" height="78" as="geometry"/>
