@@ -17,5 +17,10 @@ class ScrottenSpider(CrawlSpider):
 
     def parse_item(self, response):
         i = ScrottenMovieItem()
-        i['title'] = response.css('h1.scoreboard__title ::text').extract_first()
+        i['movie_id'] = response.url[30:]
+        i['name'] = response.css('h1.scoreboard__title ::text').extract_first()
+        i['genre'] = response.css('div.meta-value.genre ::text').extract_first().replace(' ','').replace('\n','')
+        i['year'] = response.css('p.scoreboard__info ::text').extract_first()[:4]
+        i['gross_sales'] = response.selector.xpath('//*[@class="meta-row clearfix"]//div[text()[contains(.,"Box Office (Gross USA):")]]/parent::*//div[@class="meta-value"]/text()').extract_first()
+        i['approval_percentage'] = response.css('score-board ::attr(tomatometerscore)').extract_first()
         return i
