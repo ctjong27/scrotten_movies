@@ -7,7 +7,8 @@ class ScrottenSpider(CrawlSpider):
 
     name = 'scrottenspider'
     allowed_domains = ['rottentomatoes.com']
-    start_urls = ['https://www.rottentomatoes.com/top/bestofrt/?year=2018',]
+    start_urls = ['https://www.rottentomatoes.com/top/bestofrt/?year=' + str(i) for i in range(1950, 2025)]
+
 
     def parse(self, response):
         rows = response.xpath('//*[@class="table"]/tr/td[3]/a/@href').extract()

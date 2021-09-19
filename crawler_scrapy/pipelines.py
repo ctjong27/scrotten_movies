@@ -15,12 +15,18 @@ def clean_name(param):
     return param
 
 def clean_genre(param):
+    if param is None:
+        return ''
+
     return param
 
 def clean_year(param):
     return param
 
 def clean_gross_sales(param):
+    if param is None:
+        return 0
+
     param = param.strip().replace('$', '')
     
     base = 0
@@ -38,6 +44,9 @@ def clean_gross_sales(param):
     return Decimal(param) * base
 
 def clean_approval_percentage(param):
+    if param is None:
+        return 0
+
     return param
 
 class ScrottenCrawlerPipeline(object):
