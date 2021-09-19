@@ -49,6 +49,7 @@ def clean_approval_percentage(param):
 
     return param
 
+
 class ScrottenCrawlerPipeline(object):
 
     def process_item(self, item, spider):

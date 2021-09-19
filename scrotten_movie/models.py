@@ -1,6 +1,7 @@
 import uuid
 from django.db import models
 
+
 class ScrottenMovie(models.Model):
     movie_id = models.CharField('Movie Id', primary_key=True, max_length=255, unique=True)
     name = models.CharField('Name', max_length=255, unique=False)
