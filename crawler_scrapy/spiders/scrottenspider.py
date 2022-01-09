@@ -9,7 +9,8 @@ class ScrottenSpider(CrawlSpider):
     allowed_domains = ['rottentomatoes.com']
 
     # Process Rotten Tomato Movies from 1950 until 2025
-    start_urls = ['https://www.rottentomatoes.com/top/bestofrt/?year=' + str(i) for i in range(1950, 2025)]
+    # start_urls = ['https://www.rottentomatoes.com/top/bestofrt/?year=' + str(i) for i in range(1950, 2025)]
+    start_urls = ['https://www.rottentomatoes.com/top/bestofrt/?year=' + str(i) for i in range(2020, 2021)]
 
     def parse(self, response):
         rows = response.xpath('//*[@class="table"]/tr/td[3]/a/@href').extract()
