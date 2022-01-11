@@ -12,6 +12,7 @@ class ScrottenSpider(CrawlSpider):
     # start_urls = ['https://www.rottentomatoes.com/top/bestofrt/?year=' + str(i) for i in range(1950, 2025)]
     start_urls = ['https://www.rottentomatoes.com/top/bestofrt/?year=' + str(i) for i in range(2020, 2021)]
 
+    # enter the link and in the new page, retrieve the information found within the callback
     def parse(self, response):
         rows = response.xpath('//*[@class="table"]/tr/td[3]/a/@href').extract()
         for row in rows:
