@@ -8,9 +8,15 @@
 import scrapy
 from scrapy_djangoitem import DjangoItem
 from scrotten_movie.models import ScrottenMovie
+from scrotten_member.models import ScrottenMember
 
 
 class ScrottenMovieItem(DjangoItem):
     django_model = ScrottenMovie
-    image_urls = scrapy.Field()
-    images = scrapy.Field()
+    # image_urls = scrapy.Field()
+    # images = scrapy.Field()
+
+class ScrottenMemberItem(DjangoItem):
+    django_model = ScrottenMember
+    # image_urls = scrapy.Field()
+    # images = scrapy.Field()
