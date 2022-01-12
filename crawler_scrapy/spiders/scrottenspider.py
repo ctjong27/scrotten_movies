@@ -43,7 +43,7 @@ class ScrottenSpider(CrawlSpider):
 
     
     def parse_member_item(self, response):
-        j = ScrottenMemberItem()
+        i = ScrottenMemberItem()
         i['member_id'] = response.url[30:]
         i['name'] = "asd"
         i['ethnicity'] = "asd"
