@@ -16,17 +16,17 @@ class ScrottenSpider(CrawlSpider):
     def parse(self, response):
         rows = response.xpath('//*[@class="table"]/tr/td[3]/a/@href').extract()
         # link = 'https://www.rottentomatoes.com' + rows[0]
-        # for row in rows:
-        #     print(row)
-        #     link = 'https://www.rottentomatoes.com' + row
-            
-        #     # enter movies
-        #     yield scrapy.Request(url=link, callback=self.parse_movie_item)
-        for x in range(0, 5):
-            link = 'https://www.rottentomatoes.com' + rows[x]
+        for row in rows:
+            print(row)
+            link = 'https://www.rottentomatoes.com' + row
             
             # enter movies
             yield scrapy.Request(url=link, callback=self.parse_movie_item)
+        # for x in range(0, 5):
+        #     link = 'https://www.rottentomatoes.com' + rows[x]
+            
+        #     # enter movies
+        #     yield scrapy.Request(url=link, callback=self.parse_movie_item)
             
     def parse_movie_item(self, response):
         i = ScrottenWebDataItem()
@@ -39,13 +39,14 @@ class ScrottenSpider(CrawlSpider):
         i['movie_year'] = response.css('p.scoreboard__info ::text').extract_first()[:4]
         i['movie_gross_sales'] = response.selector.xpath('//*[@class="meta-row clearfix"]//div[text()[contains(.,"Box Office (Gross USA):")]]/parent::*//div[@class="meta-value"]/text()').extract_first()
         i['movie_approval_percentage'] = response.css('score-board ::attr(tomatometerscore)').extract_first()
-    
-        # enter cast members
-        rows = response.xpath('//*[@data-qa="cast-crew-item"]/div[1]/a/@href').extract()
-        rows = list(set(rows))
-        for row in rows:
-            link = 'https://www.rottentomatoes.com' + row
-            yield scrapy.Request(url=link, meta={'item':i}, callback=self.parse_member_item)
+        
+        yield i
+        # # enter cast members
+        # rows = response.xpath('//*[@data-qa="cast-crew-item"]/div[1]/a/@href').extract()
+        # rows = list(set(rows))
+        # for row in rows:
+        #     link = 'https://www.rottentomatoes.com' + row
+        #     yield scrapy.Request(url=link, meta={'item':i}, callback=self.parse_member_item)
 
     
     def parse_member_item(self, response):
