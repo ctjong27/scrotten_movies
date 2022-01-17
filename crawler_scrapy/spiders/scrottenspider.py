@@ -15,14 +15,18 @@ class ScrottenSpider(CrawlSpider):
     # enter the link and in the new page, retrieve the information found within the callback
     def parse(self, response):
         rows = response.xpath('//*[@class="table"]/tr/td[3]/a/@href').extract()
-        for row in rows:
-            link = 'https://www.rottentomatoes.com' + row
+        # link = 'https://www.rottentomatoes.com' + rows[0]
+        # for row in rows:
+        #     print(row)
+        #     link = 'https://www.rottentomatoes.com' + row
+            
+        #     # enter movies
+        #     yield scrapy.Request(url=link, callback=self.parse_movie_item)
+        for x in range(0, 5):
+            link = 'https://www.rottentomatoes.com' + rows[x]
             
             # enter movies
             yield scrapy.Request(url=link, callback=self.parse_movie_item)
-            
-            # enter movies
-        yield scrapy.Request(url=link, callback=self.parse_movie_item)
             
     def parse_movie_item(self, response):
         i = ScrottenWebDataItem()
