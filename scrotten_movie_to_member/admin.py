@@ -1,7 +1,7 @@
 from django.contrib import admin
-from .models import ScrottenWebData
+from .models import ScrottenMovieToMember
 
 
 class ScrottenMovieToMemberAdmin(admin.ModelAdmin):
     pass
-admin.site.register(ScrottenWebData, ScrottenWebDataAdmin)
+admin.site.register(ScrottenMovieToMember, ScrottenMovieToMemberAdmin)
