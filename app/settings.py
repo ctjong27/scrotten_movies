@@ -37,9 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'scrotten_web_data',
     'scrotten_movie',
     'scrotten_member',
-    'scrotten_web_data'
+    'scrotten_movie_to_member',
 ]
 
 MIDDLEWARE = [

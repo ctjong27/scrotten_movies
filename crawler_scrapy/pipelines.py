@@ -7,6 +7,7 @@
 
 from scrotten_movie.models import ScrottenMovie
 from scrotten_member.models import ScrottenMember
+from scrotten_movie_to_member.models import ScrottenMovieToMember
 from decimal import Decimal
 
 def clean_data(param, variable_name = ''):
@@ -107,4 +108,10 @@ class ScrottenCrawlerPipeline(object):
                 total_tv_count=member_total_tv_count,
             )
 
+        if not ScrottenMovieToMember.objects.filter(id=movie_id+"@"+member_id).exists():
+            ScrottenMember.objects.create(
+                movie_id=movie_id,
+                member_id=member_id,
+            )
+        
         return item
