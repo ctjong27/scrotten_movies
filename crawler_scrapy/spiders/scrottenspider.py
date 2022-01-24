@@ -11,22 +11,24 @@ class ScrottenSpider(CrawlSpider):
     # Process Rotten Tomato Movies from 1950 until 2025
     # start_urls = ['https://www.rottentomatoes.com/top/bestofrt/?year=' + str(i) for i in range(1950, 2025)]
     start_urls = ['https://www.rottentomatoes.com/top/bestofrt/?year=' + str(i) for i in range(2020, 2021)]
-
+    
     # enter the link and in the new page, retrieve the information found within the callback
     def parse(self, response):
         rows = response.xpath('//*[@class="table"]/tr/td[3]/a/@href').extract()
-        # link = 'https://www.rottentomatoes.com' + rows[0]
-        for row in rows:
-            print(row)
-            link = 'https://www.rottentomatoes.com' + row
-            
-            # enter movies
-            yield scrapy.Request(url=link, callback=self.parse_movie_item)
-        # for x in range(0, 5):
-        #     link = 'https://www.rottentomatoes.com' + rows[x]
+        # link = 'https://www.rottentomatoes.com' + rows[1]
+        ###
+        # for row in rows:
+        #     print(row)
+        #     link = 'https://www.rottentomatoes.com' + row
             
         #     # enter movies
         #     yield scrapy.Request(url=link, callback=self.parse_movie_item)
+        ###
+        for x in range(0, 3):
+            link = 'https://www.rottentomatoes.com' + rows[x]
+            
+            # enter movies
+            yield scrapy.Request(url=link, callback=self.parse_movie_item)
             
     def parse_movie_item(self, response):
         i = ScrottenWebDataItem()
@@ -40,28 +42,30 @@ class ScrottenSpider(CrawlSpider):
         i['movie_gross_sales'] = response.selector.xpath('//*[@class="meta-row clearfix"]//div[text()[contains(.,"Box Office (Gross USA):")]]/parent::*//div[@class="meta-value"]/text()').extract_first()
         i['movie_approval_percentage'] = response.css('score-board ::attr(tomatometerscore)').extract_first()
         
-        yield i
-        # # enter cast members
-        # rows = response.xpath('//*[@data-qa="cast-crew-item"]/div[1]/a/@href').extract()
-        # rows = list(set(rows))
-        # for row in rows:
-        #     link = 'https://www.rottentomatoes.com' + row
-        #     yield scrapy.Request(url=link, meta={'item':i}, callback=self.parse_member_item)
+        # enter cast members
+        rows = response.xpath('//*[@data-qa="cast-crew-item"]/div[1]/a/@href').extract()
+        rows = list(set(rows))
+        for row in rows:
+            link = 'https://www.rottentomatoes.com' + row
+            yield scrapy.Request(url=link, meta={'item':i}, callback=self.parse_member_item)
 
     
     def parse_member_item(self, response):
         i = response.request.meta['item']
         i['member_id'] = response.url[30:]
-        i['member_name'] = "asd"
-        i['member_gender'] = "asd"
-        i['member_start_movie_year'] = 2001
-        i['member_end_movie_year'] = 2003
-        i['member_start_tv_year'] = 2001
-        i['member_end_tv_year'] = 2007
-        i['member_total_active_movie_year'] = 5
-        i['member_total_active_tv_year'] = 4
-        i['member_total_movie_count'] = 3
-        i['member_total_tv_count'] = 5
+        i['member_name'] = response.css('h1.celebrity-bio__h1 ::text').extract_first()
+        i['member_gender'] = response.xpath('//*[@data-qa="celebrity-bio-summary"]/text()').extract()
+        #  response.xpath('//*[@data-qa="celebrity-bio-summary"]/text()[contains(.,"his")]').extract()
+        # response.xpath('[contains(//*[@data-qa="celebrity-bio-summary"]/text(),"his")]')
+        # i['member_start_movie_year'] = response.xpath('//*[@class="celebrity-filmography__tbody"]/tr/td[6]/text()').extract()[-1]
+        i['member_start_movie_year'] = response.xpath('//*[@data-qa="celebrity-filmography-movies"]/tbody/tr/td[6]/text()').extract()[-1]
+        i['member_end_movie_year'] = response.xpath('//*[@data-qa="celebrity-filmography-movies"]/tbody/tr/td[6]/text()').extract()[0]
+        i['member_start_tv_year'] = response.xpath('//*[@data-qa="celebrity-filmography-tv"]/tbody/tr/td[5]/span/text()').extract()[-1]
+        i['member_end_tv_year'] = response.xpath('//*[@data-qa="celebrity-filmography-tv"]/tbody/tr/td[5]/span/text()').extract()[0]
+        i['member_total_active_movie_year'] = 0
+        i['member_total_active_tv_year'] = 0
+        i['member_total_movie_count'] = 0
+        i['member_total_tv_count'] = 0
         
         print(i)
         yield i 
