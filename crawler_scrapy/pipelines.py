@@ -55,6 +55,7 @@ def clean_data(param, variable_name = ''):
         return param
         
     else:
+        print(param)
         return param
 
 # Member Details
@@ -63,7 +64,7 @@ class ScrottenCrawlerPipeline(object):
 
     def process_item(self, item, spider):
         
-        # movie processing
+        # Movie Processing Start
         movie_id = clean_data(item['movie_id'])
         movie_name = clean_data(item['movie_name'])
         movie_genre = clean_data(item['movie_genre'], 'movie_genre')
@@ -81,6 +82,7 @@ class ScrottenCrawlerPipeline(object):
                 approval_percentage=movie_approval_percentage,
             )
 
+        # Member Processing Start
         member_id = clean_data(item['member_id'])
         member_name = clean_data(item['member_name'])
         member_gender = clean_data(item['member_gender'], 'member_gender')
@@ -108,8 +110,11 @@ class ScrottenCrawlerPipeline(object):
                 total_tv_count=member_total_tv_count,
             )
 
-        if not ScrottenMovieToMember.objects.filter(id=movie_id+"@"+member_id).exists():
-            ScrottenMember.objects.create(
+        # Link Table Processing Start
+        print(movie_id+"@"+member_id)
+        if not ScrottenMovieToMember.objects.filter(id=(movie_id+"@"+member_id)).exists():
+            ScrottenMovieToMember.objects.create(
+                id=(movie_id+"@"+member_id),
                 movie_id=movie_id,
                 member_id=member_id,
             )
