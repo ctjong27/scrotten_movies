@@ -46,13 +46,67 @@ def clean_data(param, variable_name = ''):
         if param is None:
             return ''
 
-        return param
+        male_found = [s for s in param if ' his ' in s.lower()]
+        female_found = [s for s in param if ' her ' in s.lower()]
         
+        ### Old method does not account for straing array of summary information
+        # male_found = param.find(' his ')
+        # female_found = param.find(' her ') 
+        
+        if male_found and female_found: return 'unkown'
+        elif male_found : return 'male'
+        elif female_found: return 'female'
+        else : return ''
+
     elif variable_name == 'movie_approval_percentage':
         if param is None:
             return 0
 
         return param
+    
+    
+    elif variable_name == 'member_start_movie_year':
+        if param is None:
+            return 0
+
+        if not param:
+            return 0
+        
+        print(param)
+        return int(param[-1][0:4])
+    
+    
+    elif variable_name == 'member_end_movie_year':
+        if param is None:
+            return 0
+
+        if not param:
+            return 0
+        
+        print(param)
+        return int(param[0][-4:])
+    
+    
+    elif variable_name == 'member_start_tv_year':
+        if param is None:
+            return 0
+        
+        if not param:
+            return 0
+
+        print(param)
+        return int(param[-1][0:4])
+    
+    
+    elif variable_name == 'member_end_tv_year':
+        if param is None:
+            return 0
+
+        if not param:
+            return 0
+        
+        print(param)
+        return int(param[0][-4:])
         
     else:
         print(param)
@@ -85,13 +139,15 @@ class ScrottenCrawlerPipeline(object):
         # Member Processing Start
         member_id = clean_data(item['member_id'])
         member_name = clean_data(item['member_name'])
+
         member_gender = clean_data(item['member_gender'], 'member_gender')
-        member_start_movie_year = clean_data(item['member_start_movie_year'])
-        member_end_movie_year = clean_data(item['member_end_movie_year'])
-        member_start_tv_year = clean_data(item['member_start_tv_year'])
-        member_end_tv_year = clean_data(item['member_end_tv_year'])
-        member_total_active_movie_year = clean_data(item['member_total_active_movie_year'])
-        member_total_active_tv_year = clean_data(item['member_total_active_tv_year'])
+        member_start_movie_year = clean_data(item['member_start_movie_year'], 'member_start_movie_year')
+        member_end_movie_year = clean_data(item['member_end_movie_year'], 'member_end_movie_year')
+        member_start_tv_year = clean_data(item['member_start_tv_year'], 'member_start_tv_year')
+        member_end_tv_year = clean_data(item['member_end_tv_year'], 'member_end_tv_year')
+        
+        member_total_active_movie_year = member_end_movie_year - member_start_movie_year
+        member_total_active_tv_year = member_end_tv_year - member_start_tv_year
         member_total_movie_count = clean_data(item['member_total_movie_count'])
         member_total_tv_count = clean_data(item['member_total_tv_count'])
 
