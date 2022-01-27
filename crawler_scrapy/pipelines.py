@@ -42,6 +42,20 @@ def clean_data(param, variable_name = ''):
 
         return param
         
+        
+    elif variable_name == 'member_birth_year':
+        if param is None:
+            return 0
+
+        if not param:
+            return 0
+        
+        if [s for s in param if 'not available' in s.lower()]:
+            return 0
+        
+        return int(param[0].replace(' ', '').replace('\n', '')[-4:])
+    
+    
     elif variable_name == 'member_gender':
         if param is None:
             return ''
@@ -72,7 +86,6 @@ def clean_data(param, variable_name = ''):
         if not param:
             return 0
         
-        print(param)
         return int(param[-1][0:4])
     
     
@@ -83,7 +96,6 @@ def clean_data(param, variable_name = ''):
         if not param:
             return 0
         
-        print(param)
         return int(param[0][-4:])
     
     
@@ -94,7 +106,6 @@ def clean_data(param, variable_name = ''):
         if not param:
             return 0
 
-        print(param)
         return int(param[-1][0:4])
     
     
@@ -105,11 +116,9 @@ def clean_data(param, variable_name = ''):
         if not param:
             return 0
         
-        print(param)
         return int(param[0][-4:])
         
     else:
-        print(param)
         return param
 
 # Member Details
@@ -139,6 +148,7 @@ class ScrottenCrawlerPipeline(object):
         # Member Processing Start
         member_id = clean_data(item['member_id'])
         member_name = clean_data(item['member_name'])
+        member_birth_year = clean_data(item['member_birth_year'], 'member_birth_year')
 
         member_gender = clean_data(item['member_gender'], 'member_gender')
         member_start_movie_year = clean_data(item['member_start_movie_year'], 'member_start_movie_year')
@@ -155,6 +165,7 @@ class ScrottenCrawlerPipeline(object):
             ScrottenMember.objects.create(
                 member_id=member_id,
                 name=member_name,
+                birth_year=member_birth_year,
                 gender=member_gender,
                 start_movie_year=member_start_movie_year,
                 end_movie_year=member_end_movie_year,
@@ -167,7 +178,6 @@ class ScrottenCrawlerPipeline(object):
             )
 
         # Link Table Processing Start
-        print(movie_id+"@"+member_id)
         if not ScrottenMovieToMember.objects.filter(id=(movie_id+"@"+member_id)).exists():
             ScrottenMovieToMember.objects.create(
                 id=(movie_id+"@"+member_id),

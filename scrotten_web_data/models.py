@@ -14,6 +14,7 @@ class ScrottenWebData(models.Model):
     
     member_id = models.CharField('Member Id', max_length=255, unique=True)
     member_name = models.CharField('Name', max_length=255, unique=False)
+    member_birth_year = models.PositiveIntegerField('Birth Year', blank=True, null=True)
     member_gender = models.CharField('Gender', max_length=255, unique=False)
     member_start_movie_year = models.PositiveIntegerField('Start Movie Year', blank=True, null=True)
     member_end_movie_year = models.PositiveIntegerField('End Movie Year', blank=True, null=True)

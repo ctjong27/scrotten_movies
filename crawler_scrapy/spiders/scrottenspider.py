@@ -19,7 +19,7 @@ class ScrottenSpider(CrawlSpider):
         rows = response.xpath('//*[@class="table"]/tr/td[3]/a/@href').extract()
         
         for row in rows:
-            print(row)
+            # print(row)
             link = 'https://www.rottentomatoes.com' + row
             
             # enter movies
@@ -57,6 +57,7 @@ class ScrottenSpider(CrawlSpider):
         i = response.request.meta['item']
         i['member_id'] = response.url[30:]
         i['member_name'] = response.css('h1.celebrity-bio__h1 ::text').extract_first()
+        i['member_birth_year'] = response.xpath('//*[@data-qa="celebrity-bio-bday"]/text()').getall()
         i['member_gender'] = response.xpath('//*[@data-qa="celebrity-bio-summary"]/text()').extract()
         
         # i['member_start_movie_year'] = response.xpath('//*[@class="celebrity-filmography__tbody"]/tr/td[6]/text()').extract()[-1]
@@ -69,6 +70,6 @@ class ScrottenSpider(CrawlSpider):
         i['member_total_movie_count'] = len(response.xpath('//*[@data-qa="celebrity-filmography-movies"]/tbody/tr/td[6]/text()').getall())
         i['member_total_tv_count'] = len(response.xpath('//*[@data-qa="celebrity-filmography-tv"]/tbody/tr/td[5]/span/text()').getall())
         
-        print(i)
+        # print(i)
         yield i 
     
