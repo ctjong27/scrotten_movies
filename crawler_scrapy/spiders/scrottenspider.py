@@ -9,10 +9,10 @@ class ScrottenSpider(CrawlSpider):
     allowed_domains = ['rottentomatoes.com']
 
     # Process Rotten Tomato Movies from 1950 until 2025
-    start_urls = ['https://www.rottentomatoes.com/top/bestofrt/?year=' + str(i) for i in range(1950, 2025)]
+    # start_urls = ['https://www.rottentomatoes.com/top/bestofrt/?year=' + str(i) for i in range(1950, 2025)]
     
     ### Debug through movies in 2029
-    # start_urls = ['https://www.rottentomatoes.com/top/bestofrt/?year=' + str(i) for i in range(2020, 2021)]
+    start_urls = ['https://www.rottentomatoes.com/top/bestofrt/?year=' + str(i) for i in range(1999, 2025)]
     
     # enter the link and in the new page, retrieve the information found within the callback
     def parse(self, response):
