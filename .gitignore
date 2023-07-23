@@ -129,4 +129,8 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-code/data/oscar_movies.csv
+
+# code/data/oscar_movies.csv
+data/
+_archives/_archive_3/imdb_data/imdb_movie_to_persons.csv
+movies_db.sqlite
