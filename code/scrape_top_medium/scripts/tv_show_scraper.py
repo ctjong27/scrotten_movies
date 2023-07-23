@@ -6,16 +6,23 @@ import pathlib
 # Variables
 num_top_shows = 25  # Desired number of top shows here
 
-# Determine root directory
-root_dir = pathlib.Path(__file__).parent.absolute()
+# # Determine root directory
+# root_dir = pathlib.Path(__file__).parent.absolute()
 
-# Read API key from the root directory
-with open(os.path.join(root_dir, '..', 'api_key.txt'), 'r') as file:
-# with open(os.path.join(root_dir, 'api_key.txt'), 'r') as file:
+# # Read API key from the root directory
+# with open(os.path.join(root_dir, '..', 'api_key.txt'), 'r') as file:
+# # with open(os.path.join(root_dir, 'api_key.txt'), 'r') as file:
+#     api_key = file.read().strip()
+
+
+# Get current working directory
+cwd = os.getcwd()
+
+# Create data directory if it does not exist
+os.makedirs(os.path.join(cwd, 'data'), exist_ok=True)
+
+with open(os.path.join(cwd, 'api_key.txt'), 'r') as file:
     api_key = file.read().strip()
-
-# Create data directory if it does not exist in the root directory
-os.makedirs(os.path.join(root_dir, 'data'), exist_ok=True)
 
 # Prepare data for CSV
 csv_data = []
@@ -45,7 +52,7 @@ for year in range(1970, 2021):
         csv_data.append([year, i, show['name'], ", ".join([str(id) for id in show['genre_ids']]), show['first_air_date'], ", ".join(show['origin_country']), show['vote_average'], show['popularity']])
 
 # Write to CSV in the data directory in the root directory
-with open(os.path.join(root_dir, '..',  f'data/tv_shows_top_{num_top_shows}_yearly.csv'), 'w', newline='', encoding='utf-8') as f:
+with open(os.path.join(cwd, f'data/tv_shows_top_{num_top_shows}_yearly.csv'), 'w', newline='', encoding='utf-8') as f:
     writer = csv.writer(f)
     writer.writerow(["Year", "Rank", "Show Name", "Genre IDs", "First Air Date", "Origin Country", "Rating", "Popularity"])  # Write header
     writer.writerows(csv_data)  # Write data
