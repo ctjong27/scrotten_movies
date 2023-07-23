@@ -4,14 +4,17 @@ import os
 import pathlib
 from tqdm import tqdm
 
-# Variables
+# Configuration
 num_top_shows = 25  # Desired number of top shows here
+start_year = 1980  # Start year for the data
+end_year = 2021  # End year for the data
 
 # Get current working directory
 cwd = os.getcwd()
 
 # File path for the data
 file_path = os.path.join(cwd, f'data/tv_shows_top_{num_top_shows}_yearly.csv')
+# file_path = os.path.join(cwd, f'data/tv_shows_top_{num_top_shows}_{start_year}_to_{end_year}.csv')
 
 # Check if file already exists
 if os.path.exists(file_path):
@@ -27,9 +30,9 @@ else:
     csv_data = []
 
     # Initialize progress bar
-    pbar = tqdm(total=(2021-1970+1)*num_top_shows)
+    pbar = tqdm(total=(end_year-start_year+1)*num_top_shows)
 
-    for year in range(1970, 2021):
+    for year in range(start_year, end_year+1):
         page = 1
         shows_filtered = []
 
@@ -52,7 +55,6 @@ else:
 
         for i, show in enumerate(shows_filtered[:num_top_shows], start=1):
             csv_data.append([year,
-                            # i,
                             show['name'],
                             show['id'],
                             ", ".join([str(id) for id in show['genre_ids']]), show['first_air_date'], 
@@ -69,7 +71,5 @@ else:
     # Write to CSV in the data directory in the root directory
     with open(file_path, 'w', newline='', encoding='utf-8') as f:
         writer = csv.writer(f)
-        # writer.writerow(["Year", "Rank", "Show Name", "Show ID", "Genre IDs", "First Air Date", "Origin Country", "Rating", "Popularity"])  # Write header
-        # writer.writerow(["Year", "Show Name", "Show ID", "Genre IDs", "First Air Date", "Origin Country", "Rating", "Popularity"])  # Write header
         writer.writerow(["year", "name", "id", "genres", "first_air_date", "origin_country", "rating", "popularity"])  # Write header
         writer.writerows(csv_data)  # Write data

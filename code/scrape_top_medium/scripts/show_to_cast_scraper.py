@@ -49,7 +49,7 @@ for _, show in tv_shows.iterrows():
 
     if cast:
         for actor in cast:
-            csv_data.append([show_id, actor['name'], actor['total_episode_count']])
+            csv_data.append([show_id, actor['id'], actor['name'], actor['total_episode_count']])
     
     # Update progress bar
     pbar.update(1)
@@ -60,5 +60,5 @@ pbar.close()
 # Write to CSV
 with open(output_file_path, 'w', newline='', encoding='utf-8') as f:
     writer = csv.writer(f)
-    writer.writerow(["Show ID", "Actor Name", "Episode Count"])  # Write header
+    writer.writerow(['show_id','cast_id','cast_name','episode_count'])  # Write header
     writer.writerows(csv_data)  # Write data
