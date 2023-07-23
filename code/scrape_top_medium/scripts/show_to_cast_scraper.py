@@ -21,6 +21,14 @@ def get_cast(api_key, show_id):
 # Getting the current working directory
 cwd = os.getcwd()
 
+# Define output file path
+output_file_path = os.path.join(cwd, 'data', 'tv_show_cast.csv')
+
+# Check if output file already exists, and if so, exit
+if os.path.exists(output_file_path):
+    print("Output file already exists. Exiting.")
+    exit()
+
 # Reading the API key from the text file
 with open(os.path.join(cwd, 'api_key.txt'), 'r') as file:
     api_key = file.read().strip()
@@ -50,7 +58,7 @@ for _, show in tv_shows.iterrows():
 pbar.close()
 
 # Write to CSV
-with open(os.path.join(cwd, 'data', 'tv_show_cast.csv'), 'w', newline='', encoding='utf-8') as f:
+with open(output_file_path, 'w', newline='', encoding='utf-8') as f:
     writer = csv.writer(f)
     writer.writerow(["Show ID", "Actor Name", "Episode Count"])  # Write header
     writer.writerows(csv_data)  # Write data
