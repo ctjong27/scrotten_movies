@@ -2,7 +2,6 @@ import requests
 import os
 import pandas as pd
 from tqdm import tqdm
-import concurrent.futures
 
 # Function to get information of a person using the TMDb API
 def get_person(api_key, person_id):
@@ -47,40 +46,34 @@ with open(os.path.join(cwd, 'api_key.txt'), 'r') as file:
 # Initialize progress bar
 pbar = tqdm(total=len(unique_cast_ids))
 
-# Define function to be run in a thread
-def process_person(person_id):
+# Process each person in the cast
+for i, person_id in enumerate(unique_cast_ids):
     # If person already in output data, skip
     if person_id in output_data['id'].values:
-        return None
+        pbar.update(1)
+        continue
 
     # Get person data
     person_data = get_person(api_key, person_id)
 
     if person_data:
-        return person_data
-    else:
-        return None
+        # Add data to DataFrame
+        output_data.loc[len(output_data)] = [
+            person_data['id'],
+            person_data['imdb_id'],
+            person_data['name'],
+            person_data['gender'],
+            person_data['birthday'],
+            person_data['deathday'],
+            person_data['profile_path']
+        ]
 
-# Create a ThreadPoolExecutor
-with concurrent.futures.ThreadPoolExecutor() as executor:
-    # Start threads for each person in the cast
-    future_results = {executor.submit(process_person, person_id): person_id for person_id in unique_cast_ids}
+    # Write to CSV every 100 entries or at the end
+    if (i + 1) % 100 == 0 or (i + 1) == len(unique_cast_ids):
+        output_data.to_csv(output_file_path, index=False)
 
-    for future in concurrent.futures.as_completed(future_results):
-        person_data = future.result()
-        if person_data is not None:
-            # Add data to DataFrame
-            output_data.loc[len(output_data)] = [
-                person_data['id'],
-                person_data['imdb_id'],
-                person_data['name'],
-                person_data['gender'],
-                person_data['birthday'],
-                person_data['deathday'],
-                person_data['profile_path']
-            ]
-        # Update progress bar
-        pbar.update(1)
+    # Update progress bar
+    pbar.update(1)
 
 # Close progress bar
 pbar.close()
