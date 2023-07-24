@@ -6,9 +6,7 @@ from tqdm import tqdm
 # Function to get information of a person using the TMDb API
 def get_person(api_key, person_id):
     url = f"https://api.themoviedb.org/3/person/{person_id}?api_key={api_key}"
-
     response = requests.get(url)
-
     if response.status_code == 200:
         return response.json()
     else:
@@ -50,13 +48,16 @@ pbar = tqdm(total=len(unique_cast_ids))
 
 # Process each person in the cast
 for i, person_id in enumerate(unique_cast_ids):
+    # If person already in output data, skip
     if person_id in output_data['id'].values:
         pbar.update(1)
         continue
 
+    # Get person data
     person_data = get_person(api_key, person_id)
 
     if person_data:
+        # Add data to DataFrame
         output_data.loc[len(output_data)] = [
             person_data['id'],
             person_data['imdb_id'],
@@ -70,7 +71,7 @@ for i, person_id in enumerate(unique_cast_ids):
     # Write to CSV every 100 entries or at the end
     if (i + 1) % 100 == 0 or (i + 1) == len(unique_cast_ids):
         output_data.to_csv(output_file_path, index=False)
-        
+
     # Update progress bar
     pbar.update(1)
 
