@@ -1,6 +1,5 @@
 import requests
 import os
-import csv
 import pandas as pd
 from tqdm import tqdm
 
@@ -20,17 +19,8 @@ def get_person(api_key, person_id):
 cwd = os.getcwd()
 
 # Define input and output file paths
-input_file_path = os.path.join(cwd, 'data/tv_show_cast.csv')
-output_file_path = os.path.join(cwd, 'data/tv_show_cast_details.csv')
-
-# Check if output file already exists, and if so, exit
-if os.path.exists(output_file_path):
-    print("Output file already exists. Exiting.")
-    exit()
-
-# Reading the API key from the text file
-with open(os.path.join(cwd, 'api_key.txt'), 'r') as file:
-    api_key = file.read().strip()
+input_file_path = os.path.join(cwd, 'data', 'tv_show_cast.csv')
+output_file_path = os.path.join(cwd, 'data', 'tv_show_cast_details.csv')
 
 # Load the cast data from the CSV file
 cast_df = pd.read_csv(input_file_path)
@@ -39,35 +29,53 @@ cast_df = pd.read_csv(input_file_path)
 unique_cast_ids = cast_df['cast_id'].unique()
 unique_cast_ids.sort()
 
-# Prepare data for CSV
-csv_data = []
+# Load the existing data if file exists
+if os.path.exists(output_file_path):
+    output_data = pd.read_csv(output_file_path)
+else:
+    # Prepare DataFrame for output data
+    output_data = pd.DataFrame(columns=['id', 'imdb_id', 'name', 'gender', 'birthday', 'deathday', 'profile_path'])
+
+# Check if output file has same count as unique actors, if so skip remaining logic
+if len(unique_cast_ids) == len(output_data):
+    print("Output file already contains all unique actors. Exiting.")
+    exit()
+
+# Reading the API key from a text file
+with open(os.path.join(cwd, 'api_key.txt'), 'r') as file:
+    api_key = file.read().strip()
 
 # Initialize progress bar
 pbar = tqdm(total=len(unique_cast_ids))
 
 # Process each person in the cast
-for person_id in unique_cast_ids:
+for i, person_id in enumerate(unique_cast_ids):
+    if person_id in output_data['id'].values:
+        pbar.update(1)
+        continue
+
     person_data = get_person(api_key, person_id)
 
     if person_data:
-        csv_data.append([
-            person_data['id'],
-            person_data['imdb_id'],
-            person_data['name'],
-            person_data['gender'],
-            person_data['birthday'],
-            person_data['deathday'],
-            person_data['profile_path'],
-        ])
+        output_data = output_data.append({
+            'id': person_data['id'],
+            'imdb_id': person_data['imdb_id'],
+            'name': person_data['name'],
+            'gender': person_data['gender'],
+            'birthday': person_data['birthday'],
+            'deathday': person_data['deathday'],
+            'profile_path': person_data['profile_path'],
+        }, ignore_index=True)
 
+    # Write to CSV every 100 entries or at the end
+    if (i + 1) % 100 == 0 or (i + 1) == len(unique_cast_ids):
+        output_data.to_csv(output_file_path, index=False)
+        
     # Update progress bar
     pbar.update(1)
 
 # Close progress bar
 pbar.close()
 
-# Write to CSV
-with open(output_file_path, 'w', newline='', encoding='utf-8') as f:
-    writer = csv.writer(f)
-    writer.writerow(['id', 'imdb_id', 'name', 'gender', 'birthday', 'deathday', 'profile_path'])  # Write header
-    writer.writerows(csv_data)  # Write data
+# Write any remaining data to CSV
+output_data.to_csv(output_file_path, index=False)
