@@ -2,6 +2,7 @@ import requests
 import os
 import pandas as pd
 from tqdm import tqdm
+import concurrent.futures
 
 # Function to get information of a person using the TMDb API
 def get_person(api_key, person_id):
@@ -46,12 +47,12 @@ with open(os.path.join(cwd, 'api_key.txt'), 'r') as file:
 # Initialize progress bar
 pbar = tqdm(total=len(unique_cast_ids))
 
-# Process each person in the cast
-for i, person_id in enumerate(unique_cast_ids):
+# Define function to be run in a thread
+def process_person(person_id):
     # If person already in output data, skip
     if person_id in output_data['id'].values:
         pbar.update(1)
-        continue
+        return
 
     # Get person data
     person_data = get_person(api_key, person_id)
@@ -68,12 +69,13 @@ for i, person_id in enumerate(unique_cast_ids):
             person_data['profile_path']
         ]
 
-    # Write to CSV every 100 entries or at the end
-    if (i + 1) % 100 == 0 or (i + 1) == len(unique_cast_ids):
-        output_data.to_csv(output_file_path, index=False)
-
     # Update progress bar
     pbar.update(1)
+
+# Create a ThreadPoolExecutor
+with concurrent.futures.ThreadPoolExecutor() as executor:
+    # Start threads for each person in the cast
+    executor.map(process_person, unique_cast_ids)
 
 # Close progress bar
 pbar.close()
