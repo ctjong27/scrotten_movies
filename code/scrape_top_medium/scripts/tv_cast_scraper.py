@@ -57,15 +57,15 @@ for i, person_id in enumerate(unique_cast_ids):
     person_data = get_person(api_key, person_id)
 
     if person_data:
-        output_data = output_data.append({
-            'id': person_data['id'],
-            'imdb_id': person_data['imdb_id'],
-            'name': person_data['name'],
-            'gender': person_data['gender'],
-            'birthday': person_data['birthday'],
-            'deathday': person_data['deathday'],
-            'profile_path': person_data['profile_path'],
-        }, ignore_index=True)
+        output_data.loc[len(output_data)] = [
+            person_data['id'],
+            person_data['imdb_id'],
+            person_data['name'],
+            person_data['gender'],
+            person_data['birthday'],
+            person_data['deathday'],
+            person_data['profile_path']
+        ]
 
     # Write to CSV every 100 entries or at the end
     if (i + 1) % 100 == 0 or (i + 1) == len(unique_cast_ids):
