@@ -22,7 +22,7 @@ def get_cast(api_key, show_id):
 cwd = os.getcwd()
 
 # Define output file path
-output_file_path = os.path.join(cwd, 'data', 'tv_show_to_cast.csv')
+output_file_path = os.path.join(cwd, 'data', 'tv_show_cast.csv')
 
 # Check if output file already exists, and if so, exit
 if os.path.exists(output_file_path):
