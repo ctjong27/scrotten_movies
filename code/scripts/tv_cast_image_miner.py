@@ -6,6 +6,10 @@ from PIL import Image
 from io import BytesIO
 from tqdm import tqdm
 
+print("---")
+print("TV Cast Image Miner")
+print("---")
+
 # Function to get information of a person using the TMDb API
 def get_person(api_key, person_id):
     url = f"https://api.themoviedb.org/3/person/{person_id}?api_key={api_key}"
@@ -20,7 +24,7 @@ def get_person(api_key, person_id):
 cwd = os.getcwd()
 
 # Define input and output file paths
-input_file_path = os.path.join(cwd, 'data', 'tv_show_to_cast.csv')
+input_file_path = os.path.join(cwd, 'data', 'tv_show_season_to_cast.csv')
 output_file_path = os.path.join(cwd, 'data', 'tv_cast_image_race_gender.csv')
 
 # Load the cast data from the CSV file
@@ -37,6 +41,9 @@ else:
     # Prepare DataFrame for output data
     output_data = pd.DataFrame(columns=['id', 'name', 'profile_path', 'profile_race', 'profile_gender'])
 
+# Create a set for faster lookup
+output_data_ids = set(output_data['id'])
+
 # Check if output file has same count as unique actors, if so skip remaining logic
 if len(unique_cast_ids) == len(output_data):
     print("Output image proc file already contains all unique actors. Exiting.")
@@ -52,7 +59,7 @@ with open(os.path.join(cwd, 'api_key.txt'), 'r') as file:
 # Process each person in the cast
 for i, person_id in enumerate(unique_cast_ids):
     # If person already in output data, skip
-    if person_id in output_data['id'].values:
+    if person_id in output_data_ids:
         pbar.update(1)
         continue
 
@@ -73,7 +80,7 @@ for i, person_id in enumerate(unique_cast_ids):
             if pd.notna(person_data['profile_path']):
                 img_path = f'https://image.tmdb.org/t/p/w300_and_h450_bestv2/{person_data["profile_path"]}'
                 response = requests.get(img_path)
-                img = Image.open(BytesIO(response.content))
+                # img = Image.open(BytesIO(response.content))
                 result = DeepFace.analyze(img_path, actions=['race', 'gender'], enforce_detection=False)
 
                 if isinstance(result, list):
@@ -94,7 +101,11 @@ for i, person_id in enumerate(unique_cast_ids):
             print(f'Error analyzing image for id {person_data["id"]}: {e}')
 
         # Append the results to the output DataFrame
-        output_data = output_data.append(result_dict, ignore_index=True)
+        result_df = pd.DataFrame([result_dict])
+        output_data = pd.concat([output_data, result_df], ignore_index=True)
+
+        # Add the new id to the set
+        output_data_ids.add(person_id)
 
         # Write to CSV every 100 entries or at the end
         if (i + 1) % 100 == 0 or (i + 1) == len(unique_cast_ids):

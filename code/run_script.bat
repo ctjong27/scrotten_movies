@@ -8,7 +8,7 @@ if "%~1"=="-d" (
 ) else (
     echo Running scripts...
     python ./scripts/tv_show_scraper.py
-    python ./scripts/tv_show_to_cast_scraper.py
+    python ./scripts/tv_show_season_to_cast_scraper.py
     python ./scripts/tv_cast_scraper.py
     python ./scripts/tv_cast_image_miner.py
     python ./scripts/tv_cast_gender_processor.py

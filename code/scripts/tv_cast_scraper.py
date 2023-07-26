@@ -3,6 +3,10 @@ import os
 import pandas as pd
 from tqdm import tqdm
 
+print("---")
+print("TV Cast Detail Scraper")
+print("---")
+
 # Function to get information of a person using the TMDb API
 def get_person(api_key, person_id):
     url = f"https://api.themoviedb.org/3/person/{person_id}?api_key={api_key}"
@@ -17,7 +21,7 @@ def get_person(api_key, person_id):
 cwd = os.getcwd()
 
 # Define input and output file paths
-input_file_path = os.path.join(cwd, 'data', 'tv_show_to_cast.csv')
+input_file_path = os.path.join(cwd, 'data', 'tv_show_season_to_cast.csv')
 output_file_path = os.path.join(cwd, 'data', 'tv_show_cast_details.csv')
 
 # Load the cast data from the CSV file

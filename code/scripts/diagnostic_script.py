@@ -3,7 +3,7 @@ import pandas as pd
 # Load all dataframes
 df_image_race_gender = pd.read_csv('./data/tv_cast_image_race_gender.csv')
 df_cast_details = pd.read_csv('./data/tv_show_cast_details.csv')
-df_show_cast = pd.read_csv('./data/tv_show_to_cast.csv')
+df_show_cast = pd.read_csv('./data/tv_show_season_to_cast.csv')
 df_shows = pd.read_csv('./data/tv_shows_top_25_yearly.csv')
 
 
