@@ -43,4 +43,14 @@ year,name,id,genres,first_air_date,last_air_date,origin_country,rating,popularit
 1980,Texas,3150,10766,1980-08-04,1982-12-31,US,5.7,13.302
 
 join data to retrieve
-ra
+tv_shows_top_25_yearly.csv
+show_id, show_name, first_air_date, last_air_date
+
+tv_show_season_to_cast.csv
+season_number, cast_id, cast_name, episode_count, known_for_department,season_air_date
+
+tv_show_cast_details.csv
+gender as detail_gender
+
+tv_cast_image_race_gender.csv
+profile_path,profile_race,profile_gender
