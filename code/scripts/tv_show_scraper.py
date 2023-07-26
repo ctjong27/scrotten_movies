@@ -16,7 +16,7 @@ print("---")
 # Configuration
 num_top_shows = int(config.get('General', 'total_shows_per_year'))  # Desired number of top shows here
 start_year = int(config.get('General', 'start_year'))  # Start year for the data
-end_year = int(config.get('General', 'end_year'))  # End year for the data
+end_year = int(config.get('General', 'end_year')) + 1  # End year for the data
 
 # Get current working directory
 cwd = os.getcwd()
