@@ -6,8 +6,6 @@ df_cast_details = pd.read_csv('./data/tv_show_cast_details.csv')
 df_show_cast = pd.read_csv('./data/tv_show_season_to_cast.csv')
 df_shows = pd.read_csv('./data/tv_shows_top_25_yearly.csv')
 
-
-
 # Filter the dataframes
 df_cast_details_with_pics = df_cast_details[df_cast_details['profile_path'].notna()]
 df_image_race_gender_with_pics = df_image_race_gender[df_image_race_gender['profile_path'].notna()]

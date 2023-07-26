@@ -3,15 +3,20 @@ import csv
 import os
 import pathlib
 from tqdm import tqdm
+import configparser
+
+# Load the configuration file
+config = configparser.ConfigParser()
+config.read('config.ini')
 
 print("---")
 print("TV Show Detail Miner")
 print("---")
 
 # Configuration
-num_top_shows = 25  # Desired number of top shows here
-start_year = 1980  # Start year for the data
-end_year = 2021  # End year for the data
+num_top_shows = int(config.get('General', 'total_shows_per_year'))  # Desired number of top shows here
+start_year = int(config.get('General', 'start_year'))  # Start year for the data
+end_year = int(config.get('General', 'end_year'))  # End year for the data
 
 # Get current working directory
 cwd = os.getcwd()
@@ -26,8 +31,9 @@ else:
     # Create data directory if it does not exist
     os.makedirs(os.path.join(cwd, 'data'), exist_ok=True)
 
-    with open(os.path.join(cwd, 'api_key.txt'), 'r') as file:
-        api_key = file.read().strip()
+    # with open(os.path.join(cwd, 'api_key.txt'), 'r') as file:
+    #     api_key = file.read().strip()
+    api_key = config.get('API', 'api_key')
 
     # Prepare data for CSV
     csv_data = []

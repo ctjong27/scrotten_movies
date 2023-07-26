@@ -2,6 +2,11 @@ import requests
 import os
 import pandas as pd
 from tqdm import tqdm
+import configparser
+
+# Load the configuration file
+config = configparser.ConfigParser()
+config.read('config.ini')
 
 print("---")
 print("TV Cast Detail Scraper")
@@ -43,9 +48,10 @@ if len(unique_cast_ids) == len(output_data):
     print("Output file already contains all unique actors. Exiting.")
     exit()
 
-# Reading the API key from a text file
-with open(os.path.join(cwd, 'api_key.txt'), 'r') as file:
-    api_key = file.read().strip()
+# # Reading the API key from a text file
+# with open(os.path.join(cwd, 'api_key.txt'), 'r') as file:
+#     api_key = file.read().strip()
+api_key = config.get('API', 'api_key')
 
 # Initialize progress bar
 pbar = tqdm(total=len(unique_cast_ids))

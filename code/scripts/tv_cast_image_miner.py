@@ -5,6 +5,11 @@ import requests
 from PIL import Image
 from io import BytesIO
 from tqdm import tqdm
+import configparser
+
+# Load the configuration file
+config = configparser.ConfigParser()
+config.read('config.ini')
 
 print("---")
 print("TV Cast Image Miner")
@@ -52,9 +57,10 @@ if len(unique_cast_ids) == len(output_data):
 # Initialize progress bar
 pbar = tqdm(total=len(unique_cast_ids))
 
-# Reading the API key from a text file
-with open(os.path.join(cwd, 'api_key.txt'), 'r') as file:
-    api_key = file.read().strip()
+# # Reading the API key from a text file
+# with open(os.path.join(cwd, 'api_key.txt'), 'r') as file:
+#     api_key = file.read().strip()
+api_key = config.get('API', 'api_key')
 
 # Process each person in the cast
 for i, person_id in enumerate(unique_cast_ids):

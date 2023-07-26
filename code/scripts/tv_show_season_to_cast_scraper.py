@@ -3,6 +3,11 @@ import os
 import csv
 import pandas as pd
 from tqdm import tqdm
+import configparser
+
+# Load the configuration file
+config = configparser.ConfigParser()
+config.read('config.ini')
 
 print("---")
 print("TV Show Season To Cast Scraper")
@@ -45,9 +50,10 @@ if os.path.exists(output_file_path):
     print("Output file already exists. Exiting.")
     exit()
 
-# Reading the API key from the text file
-with open(os.path.join(cwd, 'api_key.txt'), 'r') as file:
-    api_key = file.read().strip()
+# # Reading the API key from the text file
+# with open(os.path.join(cwd, 'api_key.txt'), 'r') as file:
+#     api_key = file.read().strip()
+api_key = config.get('API', 'api_key')
 
 # Load the TV show data from the CSV file
 tv_shows = pd.read_csv(os.path.join(cwd, 'data', 'tv_shows_top_25_yearly.csv'))
