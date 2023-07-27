@@ -1,10 +1,15 @@
 import pandas as pd
+import configparser
+
+# Load the configuration file
+config = configparser.ConfigParser()
+config.read('config.ini')
 
 # Load all dataframes
 df_image_race_gender = pd.read_csv('./data/tv_cast_image_race_gender.csv')
 df_cast_details = pd.read_csv('./data/tv_show_cast_details.csv')
 df_show_cast = pd.read_csv('./data/tv_show_season_to_cast.csv')
-df_shows = pd.read_csv('./data/tv_shows_top_25_yearly.csv')
+df_shows = pd.read_csv(f'./data/tv_shows_top_{config.get("General", "total_shows_per_year")}_yearly.csv')
 
 # Filter the dataframes
 df_cast_details_with_pics = df_cast_details[df_cast_details['profile_path'].notna()]

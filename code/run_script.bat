@@ -7,7 +7,7 @@ if "%~1"=="-d" (
     python ./scripts/diagnostic_script.py
 ) else if "%~1"=="-e" (
     echo Running final data cleanup and export
-    python ./scripts/tv_data_final_prep.py
+    python ./scripts/tv_data_prep_and_export.py
 ) else (
     echo Running scripts...
     python ./scripts/tv_show_scraper.py

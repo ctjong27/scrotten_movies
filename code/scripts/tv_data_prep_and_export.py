@@ -58,6 +58,11 @@
 import sqlite3
 import pandas as pd
 import os
+import configparser
+
+# Load the configuration file
+config = configparser.ConfigParser()
+config.read('config.ini')
 
 # Define your data folder
 data_folder = './data' 
@@ -65,7 +70,7 @@ data_folder = './data'
 # File paths
 cast_details_path = os.path.join(data_folder, 'tv_show_cast_details.csv')
 image_race_gender_path = os.path.join(data_folder, 'tv_cast_image_race_gender.csv')
-top_25_yearly_path = os.path.join(data_folder, 'tv_shows_top_25_yearly.csv')
+top_25_yearly_path = os.path.join(data_folder, f'tv_shows_top_{config.get("General", "total_shows_per_year")}_yearly.csv')
 season_to_cast_path = os.path.join(data_folder, 'tv_show_season_to_cast.csv')
 
 # Create a connection to the SQLite database
@@ -89,8 +94,6 @@ query = """
 SELECT 
     t.id as show_id, 
     t.name as show_name, 
-    t.first_air_date, 
-    t.last_air_date, 
     s.season_number, 
     s.cast_id, 
     s.cast_name, 

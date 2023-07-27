@@ -56,7 +56,7 @@ if os.path.exists(output_file_path):
 api_key = config.get('API', 'api_key')
 
 # Load the TV show data from the CSV file
-tv_shows = pd.read_csv(os.path.join(cwd, 'data', 'tv_shows_top_25_yearly.csv'))
+tv_shows = pd.read_csv(os.path.join(cwd, 'data', f'tv_shows_top_{config.get("General", "total_shows_per_year")}_yearly.csv'))
 
 # Prepare data for CSV
 csv_data = []
