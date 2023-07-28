@@ -93,5 +93,5 @@ else:
     with open(file_path, 'w', newline='', encoding='utf-8') as f:
         writer = csv.writer(f)
         # writer.writerow(["year", "name", "id", "genres", "first_air_date", "last_air_date", "origin_country", "rating", "popularity"])  # Write header
-        writer.writerow(["year", "name", "id", "genres", "origin_country", "rating", "popularity"])  # Write header
+        writer.writerow(["year", "name", "id", "genres", "origin_country", "popularity", "vote_average", "vote_count"])  # Write header
         writer.writerows(csv_data)  # Write data
