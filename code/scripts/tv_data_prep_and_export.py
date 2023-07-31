@@ -75,6 +75,7 @@ cast_details_path = os.path.join(data_folder, 'tv_show_cast_details.csv')
 image_race_gender_path = os.path.join(data_folder, 'tv_cast_image_race_gender.csv')
 top_shows_yearly_path = os.path.join(data_folder, f'tv_shows_top_{config.get("General", "total_shows_per_year")}_yearly.csv')
 season_to_cast_path = os.path.join(data_folder, 'tv_show_season_to_cast.csv')
+season_to_race_gender_count_path = os.path.join(data_folder, 'tv_season_to_race_gender_count.csv')
 
 # Create a connection to the SQLite database
 # Note: This will create the database file if it doesn't exist already
@@ -86,12 +87,14 @@ df_cast_details = pd.read_csv(cast_details_path)
 df_image_race_gender = pd.read_csv(image_race_gender_path)
 top_shows_yearly_df = pd.read_csv(top_shows_yearly_path)
 season_to_cast_df = pd.read_csv(season_to_cast_path)
+season_to_race_gender_count_df = pd.read_csv(season_to_race_gender_count_path)
 
 # Write these DataFrames to the SQLite database
 df_cast_details.to_sql('cast_details', conn, if_exists='replace', index=False)
 df_image_race_gender.to_sql('image_race_gender', conn, if_exists='replace', index=False)
 top_shows_yearly_df.to_sql(f'top_shows_yearly', conn, if_exists='replace', index=False)
 season_to_cast_df.to_sql('season_to_cast', conn, if_exists='replace', index=False)
+season_to_race_gender_count_df.to_sql('season_to_race_gender_count', conn, if_exists='replace', index=False)
 
 # Perform SQL queries to merge the tables
 query = f"""
