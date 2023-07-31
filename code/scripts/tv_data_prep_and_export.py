@@ -54,18 +54,21 @@
 
 # tv_cast_image_race_gender.csv
 # profile_path,profile_race,profile_gender
-
 import sqlite3
 import pandas as pd
 import os
 import configparser
+
+print("--------------------")
+print("Data Export Start")
+print("--------------------")
 
 # Load the configuration file
 config = configparser.ConfigParser()
 config.read('config.ini')
 
 # Define your data folder
-data_folder = './data' 
+data_folder = './data'
 
 # File paths
 cast_details_path = os.path.join(data_folder, 'tv_show_cast_details.csv')
@@ -75,7 +78,8 @@ season_to_cast_path = os.path.join(data_folder, 'tv_show_season_to_cast.csv')
 
 # Create a connection to the SQLite database
 # Note: This will create the database file if it doesn't exist already
-conn = sqlite3.connect('tv_data.db')
+db_path = os.path.join(data_folder, 'tv_data.db')
+conn = sqlite3.connect(db_path)
 
 # Read the CSV files into DataFrames
 df_cast_details = pd.read_csv(cast_details_path)
@@ -102,6 +106,7 @@ SELECT
     s.known_for_department, 
     s.season_air_date, 
     s.season_vote_average, 
+    s.popularity as cast_popularity, 
     c.gender as detail_gender, 
     i.profile_path, 
     i.profile_race, 
@@ -115,6 +120,9 @@ FROM top_shows_yearly t
         ON s.cast_id = i.id;
 """
 
+        # AND strftime('%Y', s.season_air_date) >= '1970'
+        # AND strftime('%Y', s.season_air_date) <= '2020'
+
 final_df = pd.read_sql_query(query, conn)
 
 # Clean up the gender data
@@ -123,8 +131,20 @@ final_df['detail_gender'] = final_df['detail_gender'].map(gender_map)
 final_df.loc[~final_df['detail_gender'].isin(['Male', 'Female']), 'detail_gender'] = final_df['profile_gender']
 final_df = final_df[final_df['detail_gender'].notna()]
 
+# Duplicate all data under race of 'total'
+# total_df = final_df[['profile_race' != None]].copy()
+# final_df = final_df[final_df['profile_race'].notna()]
+total_df = final_df.copy()
+
+total_df['profile_race'] = '_total_'
+final_df = pd.concat([final_df, total_df], ignore_index=True)
+
 # Save the dataframe to a new CSV file
 final_df.to_csv(os.path.join(data_folder, 'tv_export_data.csv'), index=False)
 
 # Don't forget to close the connection
 conn.close()
+
+print("--------------------")
+print("Data Export Complete")
+print("--------------------")
