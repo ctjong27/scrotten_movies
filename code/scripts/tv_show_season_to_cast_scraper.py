@@ -73,15 +73,15 @@ for _, show in tv_shows.iterrows():
             season_air_date = season['air_date']
             season_vote_average = season.get('vote_average', 'N/A')  # Fetch vote_average
             cast, crew = get_season_cast(api_key, show_id, season_number)
-
+            
             if cast:
                 for actor in cast:
-                    csv_data.append([show_id, season_number, actor['id'], actor['name'], actor['total_episode_count'], actor['known_for_department'], season_air_date, season_vote_average])
+                    csv_data.append([show_id, season_number, actor['id'], actor['name'], actor['total_episode_count'], actor['known_for_department'], season_air_date, season_vote_average, actor['popularity']])
 
             if crew:
                 for crew_member in crew:
-                    csv_data.append([show_id, season_number, crew_member['id'], crew_member['name'], crew_member['total_episode_count'], crew_member['known_for_department'], season_air_date, season_vote_average])
-    
+                    csv_data.append([show_id, season_number, crew_member['id'], crew_member['name'], crew_member['total_episode_count'], crew_member['known_for_department'], season_air_date, season_vote_average, crew_member['popularity']])
+
     # Update progress bar
     pbar.update(1)
 
@@ -91,5 +91,5 @@ pbar.close()
 # Write to CSV
 with open(output_file_path, 'w', newline='', encoding='utf-8') as f:
     writer = csv.writer(f)
-    writer.writerow(['show_id', 'season_number', 'cast_id', 'cast_name', 'episode_count', 'known_for_department', 'season_air_date', 'season_vote_average'])  # Write header
+    writer.writerow(['show_id', 'season_number', 'cast_id', 'cast_name', 'episode_count', 'known_for_department', 'season_air_date', 'season_vote_average', 'popularity'])  # Write header
     writer.writerows(csv_data)  # Write data
