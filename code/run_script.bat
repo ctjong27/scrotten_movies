@@ -15,5 +15,6 @@ if "%~1"=="-d" (
     python ./scripts/tv_cast_scraper.py
     python ./scripts/tv_cast_image_miner.py
     python ./scripts/tv_cast_gender_processor.py
+    python ./scripts/tv_season_to_race_gender_count.py
 )
 pause
