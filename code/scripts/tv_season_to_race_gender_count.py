@@ -25,9 +25,12 @@ image_race_gender_df = pd.read_csv(image_race_gender_path)
 top_shows_yearly_df = pd.read_csv(top_shows_yearly_path)
 season_to_cast_df = pd.read_csv(season_to_cast_path)
 
+<<<<<<< HEAD
 # Filter for only rows where the department is 'Acting'
 season_to_cast_df = season_to_cast_df[season_to_cast_df['known_for_department'] == 'Acting']
 
+=======
+>>>>>>> 06106853a365cc7a92df5fd95333dee65726dba6
 # Merge DataFrames
 merged_df = pd.merge(season_to_cast_df, cast_details_df[['id', 'gender']], left_on='cast_id', right_on='id', how='left')
 merged_df = pd.merge(merged_df, image_race_gender_df[['id', 'profile_race', 'profile_gender']], left_on='cast_id', right_on='id', how='left')
@@ -51,6 +54,7 @@ pivot_df.reset_index(inplace=True)
 
 # Save the DataFrame to a new CSV file
 pivot_df.to_csv(os.path.join(data_folder, 'tv_season_to_race_gender_count.csv'), index=False)
+<<<<<<< HEAD
 
 # Calculate the total counts for each show and season
 pivot_df['total_counts'] = pivot_df.iloc[:, 2:].sum(axis=1)
@@ -68,3 +72,5 @@ pivot_percentage_df.drop(columns=['total_counts'], inplace=True)
 
 # Save the DataFrame to a new CSV file with percentage values
 pivot_percentage_df.to_csv(os.path.join(data_folder, 'tv_season_to_race_gender_percentage.csv'), index=False)
+=======
+>>>>>>> 06106853a365cc7a92df5fd95333dee65726dba6
